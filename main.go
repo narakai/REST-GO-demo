@@ -2,11 +2,13 @@ package main
 
 import (
 	"REST-GO-demo/services"
+	"REST-GO-demo/utils"
 	"log"
 )
 
 func main() {
 	orderBook := services.GetOrderBook("eth-usdt")
+	utils.StructToMapViaReflect(orderBook)
 	log.Println(orderBook)
 
 	// address := services.GetNewAddress("eth")

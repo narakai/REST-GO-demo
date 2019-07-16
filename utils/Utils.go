@@ -1,11 +1,13 @@
 package utils
 
 import (
+	"REST-GO-demo/models"
 	"crypto/sha512"
 	"encoding/hex"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"reflect"
 	"time"
 )
 
@@ -90,4 +92,17 @@ func HttpGetRequest(strUrl string, mapParams map[string]interface{}, hostURL, se
 	}
 
 	return string(body)
+}
+
+//struct转map
+func StructToMapViaReflect(model models.OrderBookResult) {
+	m := make(map[string]interface{})
+	t := time.Now()
+	elem := reflect.ValueOf(&model).Elem()
+	relType := elem.Type()
+	for i := 0; i < relType.NumField(); i++ {
+		m[relType.Field(i).Name] = elem.Field(i).Interface()
+	}
+	fmt.Println(m)
+	fmt.Printf("duration:%d", time.Now().Sub(t))
 }
